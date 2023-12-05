@@ -2,17 +2,44 @@
 
 namespace App\Advent\Days;
 
-class Day1Part2
+class Day1
 {
-    public static function resolve($input)
+    public static function resolvePart1($input): int
     {
         return str($input)
             ->explode("\n")
-            ->map(fn ($value) => self::combineFirstAndLastDigit($value))
+            ->map(fn ($value) => static::combineFirstAndLastDigit($value))
+            ->sum();
+    }
+
+    public static function resolvePart2($input): int
+    {
+        return str($input)
+            ->explode("\n")
+            ->map(fn ($value) => static::combineFirstAndLastDigitSpelled($value))
             ->sum();
     }
 
     public static function combineFirstAndLastDigit($value): int
+    {
+        $first_digit = null;
+        $last_digit = null;
+        foreach (str_split($value) as $character) {
+            if (! is_numeric($character)) {
+                continue;
+            }
+
+            if (is_null($first_digit)) {
+                $first_digit = $character;
+            }
+
+            $last_digit = $character;
+        }
+
+        return intval($first_digit.$last_digit);
+    }
+
+    public static function combineFirstAndLastDigitSpelled($value): int
     {
         $search = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
