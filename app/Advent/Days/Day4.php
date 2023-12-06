@@ -70,9 +70,6 @@ class Day4
                 $split = explode(':', $game);
                 [$winning, $numbers] = explode('|', $split[1]);
 
-                // [, $game_id] = explode(' ', trim($split[0]), 2);
-                // $game_id = intval(trim($game_id));
-
                 $game_id = intval(trim(str_replace('Card', '', $split[0])));
 
                 $winning = static::parseCards($winning);
