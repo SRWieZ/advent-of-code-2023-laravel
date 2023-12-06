@@ -54,6 +54,7 @@ class Day5
         $result = null;
 
         $pool = Pool::create()
+            ->timeout(60 * 60 * 60 * 2)
             ->saveMemory();
         // ->sleepTime(50000 / 2)
         // ->concurrency(32);
@@ -78,14 +79,18 @@ class Day5
                     return $result;
                 })
                 ->then(function ($output) use (&$result) {
+                    echo $output."\n";
                     if (is_null($result) || $output < $result) {
                         $result = $output;
-                        echo $result."\n";
+                        echo 'Min: '.$result."\n";
                     }
                     gc_collect_cycles();
                 })
                 ->catch(function (Throwable $exception) {
                     echo $exception->getMessage();
+                })
+                ->timeout(function () {
+                    echo "Timeout\n";
                 });
         }
         $pool->wait();
