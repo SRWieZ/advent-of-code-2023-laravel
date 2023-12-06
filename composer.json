@@ -11,6 +11,7 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+        "spatie/async": "^1.6",
         "spatie/once": "^3.1"
     },
     "require-dev": {
