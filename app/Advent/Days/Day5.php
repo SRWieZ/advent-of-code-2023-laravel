@@ -7,6 +7,7 @@ use Throwable;
 
 class Day5
 {
+
     public static string $input;
 
     public static array $seeds;
@@ -19,7 +20,7 @@ class Day5
         static::extractSeedsAndMaps();
 
         return collect(static::$seeds)
-            ->map(fn ($seed) => static::seedToLocation($seed))
+            ->map(fn($seed) => static::seedToLocation($seed))
             ->min();
     }
 
@@ -53,34 +54,38 @@ class Day5
 
         $result = null;
 
-        $pool = Pool::create()
-            ->saveMemory()
-            ->sleepTime(50000 / 2)
-            ->concurrency(32);
+        // $pool = Pool::create()
+        //     ->saveMemory();
+        // ->sleepTime(50000 / 2)
+        // ->concurrency(32);
 
         // 2427978056 Too high
 
         $maps = static::$maps;
         foreach ($ranges as $range) {
-            foreach (static::rangeGenerator($range['start'], $range['end']) as $seed) {
-                $pool
-                    ->add(function () use ($seed, $maps) {
 
-                        return static::seedToLocation($seed, maps: $maps);
-                    })
-                    ->then(function ($output) use (&$result) {
-                        if (is_null($result) || $output < $result) {
-                            $result = $output;
-                            echo $result."\n";
-                        }
-                        gc_collect_cycles();
-                    })
-                    ->catch(function (Throwable $exception) {
-                        echo $exception->getMessage();
-                    });
+            // $pool
+            //     ->add(function () use ($maps, $range) {
+            foreach (static::rangeGenerator($range['start'], $range['end']) as $seed) {
+                $output = static::seedToLocation($seed, maps: $maps);
+                if (is_null($result) || $output < $result) {
+                    $result = $output;
+                    echo $result . "\n";
+                }
             }
+            // })
+            // ->then(function ($output) use (&$result) {
+            //     if (is_null($result) || $output < $result) {
+            //         $result = $output;
+            //         echo $result . "\n";
+            //     }
+            //     gc_collect_cycles();
+            // })
+            // ->catch(function (Throwable $exception) {
+            //     echo $exception->getMessage();
+            // });
         }
-        $pool->wait();
+        // $pool->wait();
 
         return $result;
     }
@@ -105,8 +110,8 @@ class Day5
 
                     $ranges[$range[1]] = [
                         'start' => $range[1],
-                        'end' => $range[1] + $range[2] - 1,
-                        'diff' => $range[0] - $range[1],
+                        'end'   => $range[1] + $range[2] - 1,
+                        'diff'  => $range[0] - $range[1],
                     ];
                 }
 
@@ -165,7 +170,7 @@ class Day5
 
                 return [
                     'start' => $infos[0],
-                    'end' => $infos[0] + $infos[1],
+                    'end'   => $infos[0] + $infos[1],
                 ];
             })
             ->toArray();
