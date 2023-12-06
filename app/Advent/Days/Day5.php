@@ -166,9 +166,6 @@ class Day5
         }
     }
 
-    /**
-     * @return mixed[]
-     */
     public static function seedsToRangesOfSeeds($seeds): array
     {
         return collect($seeds)
