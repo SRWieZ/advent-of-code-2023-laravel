@@ -28,9 +28,9 @@ class Day6
         $ways = [];
         foreach ($races as $time => $distance) {
             $count = 0;
-            for ($i = 1; $i <= $time; $i++) {
-                $remaining = $time - $i;
-                if ($i * $remaining > $distance) {
+            for ($charge = 1; $charge <= $time; $charge++) {
+                $remaining = $time - $charge;
+                if ($charge * $remaining > $distance) {
                     $count++;
                 }
             }
