@@ -12,7 +12,8 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "spatie/async": "^1.6",
-        "spatie/once": "^3.1"
+        "spatie/once": "^3.1",
+      "ext-gmp": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
